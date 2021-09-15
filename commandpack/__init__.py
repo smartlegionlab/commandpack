@@ -2,10 +2,10 @@
 # --------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
 # (see LICENSE for details).
-# Copyright (c) 2018-2021, A.A Suvorov
+# Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-# Url: https://github.com/smartlegionlab/
+# Url: https://github.com/smartlegionlab
 # --------------------------------------------------------
 """A package of modules for working with commands, command packages."""
 __version__ = '0.1.1'
