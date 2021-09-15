@@ -81,3 +81,14 @@ class TestCommandPackFactory:
 
     def test_create_pack(self, command_pack_factory):
         assert isinstance(command_pack_factory.create_pack('new'), Pack)
+
+
+@pytest.fixture(name='commands')
+def get_commands():
+    commands = (Command('echo 1'), Command('echo 2'), Command('echo 3'))
+    return commands
+
+
+@pytest.fixture(name='pack_name')
+def get_pack_name():
+    return 'Termux'
