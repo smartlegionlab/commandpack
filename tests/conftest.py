@@ -5,8 +5,6 @@
 # Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-# Url: https://github.com/smartlegionlab
-# --------------------------------------------------------
 import json
 import os
 from collections import namedtuple
@@ -14,11 +12,25 @@ from collections import namedtuple
 import pytest
 
 from commandpack.commandpack import Command, Pack, CommandPackFactory
-from commandpack.commons import filter_packs
-from commandpack.executors import OsCommandExecutor, SubCommandExecutor, ExecutorsFactory, CommandExecutor, os_execute, \
-    sub_execute, smart_execute
-from commandpack.parsers import CfgParser, JsonParser, SmartParser, ParsersFactory, parse_cfg_file, parse_json_file, \
-    parse_packs
+from commandpack.executors import (
+    OsCommandExecutor,
+    SubCommandExecutor,
+    ExecutorsFactory,
+    CommandExecutor,
+    os_execute,
+    sub_execute,
+    smart_execute,
+)
+from commandpack.packmakers import PackMaker
+from commandpack.parsers import (
+    CfgParser,
+    JsonParser,
+    SmartParser,
+    ParsersFactory,
+    parse_cfg_file,
+    parse_json_file,
+    parse_packs,
+)
 
 
 @pytest.fixture(scope='session', name='command')
@@ -174,11 +186,6 @@ def get_parse_packs():
     return parse_packs
 
 
-@pytest.fixture(name='filter_packs')
-def get_filter_packs():
-    return filter_packs
-
-
 @pytest.fixture(name='pack_dict')
 def get_pack_dict(pack_names):
     packs = {name: Pack(name) for name in pack_names}
@@ -194,3 +201,8 @@ def get_pack_list(pack_names):
 @pytest.fixture(name='command_pack_factory')
 def get_command_pack_factory():
     return CommandPackFactory()
+
+
+@pytest.fixture(name='pack_maker')
+def get_pack_maker():
+    return PackMaker()

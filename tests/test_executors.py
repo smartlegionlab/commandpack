@@ -5,8 +5,6 @@
 # Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-# Url: https://github.com/smartlegionlab
-# --------------------------------------------------------
 import os
 
 from commandpack.executors import OsCommandExecutor, SubCommandExecutor

@@ -14,6 +14,15 @@
 
 ***
 
+## Help the project financially:
+
+- Yandex Money: [https://yoomoney.ru/to/4100115206129186](https://yoomoney.ru/to/4100115206129186)
+- PayPal: [https://paypal.me/smartlegionlab](https://paypal.me/smartlegionlab)
+- LiberaPay: [https://liberapay.com/smartlegion/donate](https://liberapay.com/smartlegion/donate)
+- Visa: 4048 0250 0089 5923
+
+***
+
 ## Short Description:
 
 ___commandpack___ -  A package of modules for working with commands, command packages, files with command packages.
@@ -43,7 +52,12 @@ Author and developer: ___A.A Suvorov___
 
 ## What's new?
 
-### ___commandpack v0.1.1___
+- Removed commons.py module (Use make_pack_list function from packmakers.py module).
+- Information updated. 
+
+In the near future, most likely to the next version
+you can refuse to parse * .json files, since files with commands like * .cfg
+much easier and more convenient to use. If anyone has a different opinion on this matter, write.
 
 ***
 
@@ -128,7 +142,7 @@ Utilities created with use work "commandpack", without problems in Windows:
 - `pip install pytest-coverage`
 - `pytest --cov`
 
-![commandman image](https://github.com/smartlegionlab/commandpack/raw/master/data/images/commandpack.png)
+![commandpack image](https://github.com/smartlegionlab/commandpack/raw/master/data/images/commandpack.png)
 
 
 #### Report html:
@@ -149,3 +163,13 @@ Utilities created with use work "commandpack", without problems in Windows:
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+***
+
+## Copyright:
+    --------------------------------------------------------
+    Licensed under the terms of the BSD 3-Clause License
+    (see LICENSE for details).
+    Copyright © 2018-2021, A.A Suvorov
+    All rights reserved.
+    --------------------------------------------------------

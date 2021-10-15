@@ -5,8 +5,6 @@
 # Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-# Url: https://github.com/smartlegionlab
-# --------------------------------------------------------
 from setuptools import setup, find_packages
 
 setup(

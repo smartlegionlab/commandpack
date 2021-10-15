@@ -5,7 +5,5 @@
 # Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-# Url: https://github.com/smartlegionlab
-# --------------------------------------------------------
 """A package of modules for working with commands, command packages."""
-__version__ = '0.1.1'
+__version__ = '0.1.2'
