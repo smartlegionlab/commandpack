@@ -11,174 +11,70 @@ import subprocess
 from abc import ABC, abstractmethod
 
 
-class CommandExecutorBase(ABC):
-    """Abstract Command Executor."""
-
-    def execute(self, command: str):
-        """
-        Command execute.
-
-        :param command: <str> - command.
-        :return: <bool> inverted boolean status of execution by _execute command.
-
-        """
-        return not bool(self._execute(command))
-
+class ExecutorBase(ABC):
+    """Abstract Command Executor"""
     @abstractmethod
-    def _execute(self, command: str):
-        """
-        Command execute.
+    def execute(self, command):
+        """Execute command"""
 
-        :param command: <str> - command.
-        :return: status of execution command.
-
-        """
-
-    def __call__(self, command: str):
+    def __call__(self, command):
         return self.execute(command)
 
 
-class SubCommandExecutor(CommandExecutorBase):
-    """Command executor with subprocess."""
-
-    def _execute(self, command: str):
-        """
-        Command execute.
-
-        :param command: <str> - command.
-        :return: status of execution command.
-
-        """
-        p = subprocess.Popen(command, shell=True,
-                             stderr=subprocess.DEVNULL)
-        status = p.wait()
-        return status
-
-
-class OsCommandExecutor(CommandExecutorBase):
-    """Command executor with os.system."""
-    def _execute(self, command: str):
-        """
-        Command execute.
-
-        :param command: <str> - command.
-        :return: status of execution command.
-        """
-        status = os.system(command)
-        return status
-
-
-class ExecutorsFactoryBase:
-    """Abstract Executors Factory."""
-
-    @classmethod
-    def get_os_executor(cls):
-        """Get os command executor"""
-
-    @classmethod
-    def get_sub_executor(cls):
-        """Get sub command executor"""
-
-    @classmethod
-    def smart_get_executor(cls):
-        """
-        Smart command executor.
-
-        Returns the executor depending on the system.
-
-        """
-
-
-class ExecutorsFactory:
-    """Executors Factory."""
-
-    @classmethod
-    def get_os_executor(cls):
-        """Get os command executor"""
-        return OsCommandExecutor()
-
-    @classmethod
-    def get_sub_executor(cls):
-        """Get sub command executor"""
-        return SubCommandExecutor()
-
-    @classmethod
-    def smart_get_executor(cls):
-        """
-        Smart command executor.
-
-        Returns the executor depending on the system.
-
-        """
-        if os.name == 'posix':
-            return cls.get_sub_executor()
-        else:
-            return cls.get_os_executor()
-
-
-class CommandExecutor:
-    """Command Executor.
-
-    Cross-platform.
-
-    Uses the executor depending on the system.
-    """
-    def __init__(self):
-        self._executor = self._get_executor()
-
+class OsExecutor(ExecutorBase):
     def execute(self, command):
         """
-        Command execute.
+        Execute command.
 
-        :param command: - command.
-        :return: status of execution command.
+        - To execute the command, os.system is used;
 
+        :param command: <str> - command;
+        :return: <bool> - status of execution command.
         """
-        return self._executor(command)
+        return not bool(os.system(command))
 
-    @staticmethod
-    def _get_executor():
+
+class SubExecutor(ExecutorBase):
+    def execute(self, command):
         """
-        Get executor.
+        Execute command.
 
-        :return: - returns the executor depending on the system.
+        - To execute the command, subprocess is used;
 
+        WARNING: Use with care, favor OsExecutor;
+
+        :param command: <str> - command;
+        :return: <bool> - status of execution command;
         """
-        return ExecutorsFactory().smart_get_executor()
-
-    def __call__(self, command):
-        return self._executor(command)
-
-
-def os_execute(command: str):
-    """
-    Uses command executor with os.system.
-
-    :param command: <str> - command.
-    :return: status of execution command.
-    """
-    executor = OsCommandExecutor()
-    return executor(command)
+        p = subprocess.Popen(command, shell=True, stderr=subprocess.DEVNULL)
+        status = p.wait()
+        return not bool(status)
 
 
-def sub_execute(command):
-    """
-    Uses command executor with subprocess.
+class Executor(ExecutorBase):
+    os_executor = OsExecutor()
+    sub_executor = SubExecutor()
 
-    :param command: <str> - command.
-    :return: status of execution command.
-    """
-    executor = SubCommandExecutor()
-    return executor(command)
+    @classmethod
+    def execute(cls, command):
+        """
+        Execute command.
 
+        - The Executor will be determined automatically, depending on the system.
 
-def smart_execute(command):
-    """
-    Uses command executor depending on the system.
+        :param command: <str> - command;
+        :return: <bool> - status of execution command;
+        """
+        executor = cls._get_executor()
+        return executor.execute(command)
 
-    :param command:
-    :return: status of execution command.
+    @classmethod
+    def _get_executor(cls):
+        """
+        The Executor will be determined automatically, depending on the system.
 
-    """
-    executor = CommandExecutor()
-    return executor(command)
+        :return: OsExecutor/SubExecutor depending on the posix/another;
+        """
+        if os.name == 'posix':
+            return cls.os_executor
+        return cls.sub_executor

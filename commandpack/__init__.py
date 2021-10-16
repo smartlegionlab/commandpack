@@ -5,5 +5,12 @@
 # Copyright © 2018-2021, A.A Suvorov
 # All rights reserved.
 # --------------------------------------------------------
-"""A package of modules for working with commands, command packages."""
-__version__ = '0.1.2'
+"""
+Command executors library.
+
+- A cross-platform library for creation, storage, management
+of commands and command packages. Execution of commands,
+parsing of files with command packages.
+
+"""
+__version__ = '0.2.0'

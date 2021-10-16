@@ -11,31 +11,21 @@ from collections import namedtuple
 
 import pytest
 
-from commandpack.commandpack import Command, Pack, CommandPackFactory
-from commandpack.executors import (
-    OsCommandExecutor,
-    SubCommandExecutor,
-    ExecutorsFactory,
-    CommandExecutor,
-    os_execute,
-    sub_execute,
-    smart_execute,
-)
-from commandpack.packmakers import PackMaker
-from commandpack.parsers import (
-    CfgParser,
-    JsonParser,
-    SmartParser,
-    ParsersFactory,
-    parse_cfg_file,
-    parse_json_file,
-    parse_packs,
-)
+from commandpack.executors import OsExecutor, SubExecutor, Executor
+from commandpack.factories import ExecutorsFactory, CommandPackFactory, ParsersFactory, MakersFactory
+from commandpack.tools import Command, CfgParser, Pack, JsonParser, Parser, PackMaker
 
 
 @pytest.fixture(scope='session', name='command')
 def get_command():
-    return Command('echo "test"')
+    command = Command('echo "test"')
+    return command
+
+
+@pytest.fixture(scope='session', name='commands')
+def get_commands():
+    commands = [Command('echo "test"'), Command('echo "test2"'), ]
+    return commands
 
 
 @pytest.fixture(name='command_name')
@@ -45,22 +35,17 @@ def get_command_title():
 
 @pytest.fixture(name='os_executor')
 def os_executor():
-    return OsCommandExecutor()
+    return OsExecutor()
 
 
 @pytest.fixture(name='sub_executor')
 def sub_executor():
-    return SubCommandExecutor()
+    return SubExecutor()
 
 
 @pytest.fixture(params=[('echo "Smart Legion!"', True), ('bad_command', False)], name='command_status')
 def command(request):
     yield request.param
-
-
-@pytest.fixture(name='executors_factory')
-def get_executors_factory():
-    return ExecutorsFactory()
 
 
 @pytest.fixture(name='os_name', params=['posix', 'win'])
@@ -69,24 +54,9 @@ def get_os_names(request):
     os.name = 'posix'
 
 
-@pytest.fixture(name='command_executor')
+@pytest.fixture(name='executor')
 def get_command_executor():
-    return CommandExecutor()
-
-
-@pytest.fixture(name='os_execute_func')
-def get_os_execute_func():
-    return os_execute
-
-
-@pytest.fixture(name='sub_execute_func')
-def get_sub_execute_func():
-    return sub_execute
-
-
-@pytest.fixture(name='smart_execute_func')
-def get_smart_execute_func():
-    return smart_execute
+    return Executor()
 
 
 @pytest.fixture(name='cfg_parser')
@@ -98,16 +68,20 @@ def get_cfg_parser():
 def get_data():
     data = r"""
 [Ubuntu]
-echo Ubuntu
+echo Ubuntu1
+echo Ubuntu2
 
 [Fedora]
-echo Fedora
+echo Fedora1
+echo Fedora2
 
 [Manjaro]
-echo Fedora
+echo Manjaro1
+echo Manjaro2
 
 [default]
-echo default
+echo default1
+echo default2
 """
     return data
 
@@ -116,8 +90,8 @@ echo default
 def get_dir(tmpdir, data):
     file = tmpdir.join('file.cfg')
     file.write(data)
-    Path = namedtuple('Path', ('file', 'folder'))
-    yield Path(file, tmpdir)
+    Path = namedtuple('Path', ('file', 'folder', 'cfg_data'))
+    yield Path(file, tmpdir, data)
 
 
 @pytest.fixture(name='pack_names')
@@ -127,7 +101,7 @@ def get_pack_names():
 
 @pytest.fixture(name='pack')
 def get_pack():
-    return Pack('Termux')
+    return Pack('Test')
 
 
 @pytest.fixture(name='json_parser')
@@ -147,7 +121,20 @@ def get_data_json():
             [
                 'echo Fedora1',
                 'echo Fedora2'
+            ],
+
+        "Manjaro":
+            [
+                'echo Manjaro1',
+                'echo Manjaro2'
+            ],
+
+        "default":
+            [
+                'echo default1',
+                'echo default2'
             ]
+
     }
 
     return data
@@ -161,35 +148,9 @@ def get_file_json(tmpdir, data_json):
     return file
 
 
-@pytest.fixture(name='smart_parser')
+@pytest.fixture(name='parser')
 def get_smart_parser():
-    return SmartParser()
-
-
-@pytest.fixture(name='parsers_factory')
-def get_parsers_factory():
-    return ParsersFactory()
-
-
-@pytest.fixture(name='parse_cfg_file')
-def get_parse_cfg_file():
-    return parse_cfg_file
-
-
-@pytest.fixture(name='parse_json_file')
-def get_parse_json_file():
-    return parse_json_file
-
-
-@pytest.fixture(name='parse_packs')
-def get_parse_packs():
-    return parse_packs
-
-
-@pytest.fixture(name='pack_dict')
-def get_pack_dict(pack_names):
-    packs = {name: Pack(name) for name in pack_names}
-    return packs
+    return Parser()
 
 
 @pytest.fixture(name='pack_list')
@@ -198,11 +159,36 @@ def get_pack_list(pack_names):
     return pack_list
 
 
-@pytest.fixture(name='command_pack_factory')
-def get_command_pack_factory():
-    return CommandPackFactory()
+@pytest.fixture(name='add_list')
+def get_add_list(pack_names):
+    return pack_names[:2]
+
+
+@pytest.fixture(name='exc_list')
+def get_exc_list(pack_names):
+    return pack_names[:2]
 
 
 @pytest.fixture(name='pack_maker')
 def get_pack_maker():
     return PackMaker()
+
+
+@pytest.fixture(name='executors_factory')
+def get_executors_factory():
+    return ExecutorsFactory()
+
+
+@pytest.fixture(name='command_pack_factory')
+def get_com_pack_fact():
+    return CommandPackFactory()
+
+
+@pytest.fixture(name='parsers_factory')
+def get_parsers_fact():
+    return ParsersFactory()
+
+
+@pytest.fixture(name='makers_factory')
+def get_makers_fact():
+    return MakersFactory()

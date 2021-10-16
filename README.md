@@ -25,7 +25,7 @@
 
 ## Short Description:
 
-___commandpack___ -  A package of modules for working with commands, command packages, files with command packages.
+___commandpack___ -  A cross-platform library for creation, storage, management of commands and command packages. Execution of commands, parsing of files with command packages.
 
 ***
 
@@ -52,19 +52,21 @@ Author and developer: ___A.A Suvorov___
 
 ## What's new?
 
-- Removed commons.py module (Use make_pack_list function from packmakers.py module).
-- Information updated. 
+___commandpack v0.2.0___
 
-In the near future, most likely to the next version
-you can refuse to parse * .json files, since files with commands like * .cfg
-much easier and more convenient to use. If anyone has a different opinion on this matter, write.
+- The 0.2.x versions will not be backward compatible with older versions, since the code is completely
+revised and improved. Bugs fixed. New more convenient tools have been added.
+
+- If you have problems, use version 0.1.x
+
+- Documentation will be added in future versions.
 
 ***
 
 ## Description:
 
-A package of modules for working with commands, 
-command packages, files containing command packages.
+A cross-platform library for creation, storage, management of commands and command packages. 
+Execution of commands, parsing of files with command packages.
  
 Used to create utilities for working with commands (execution, launch, autorun, storage).
 
@@ -92,7 +94,7 @@ command N
 
 ```json5
 {
-  "pack name":
+  "name1":
 
   [
     "command1",
@@ -100,7 +102,7 @@ command N
     "commandN"
   ],
 
-  "pack name2":
+  "name2":
 
   [
     "command1",
@@ -118,6 +120,33 @@ command N
 ### Install and Use:
 
 - `pip3 install commandpack`
+
+Available tools:
+
+- Command executors
+- Pack makers
+- Parsers
+- Commands
+- Packs
+- Factories
+
+```python
+from commandpack.factories import Factory
+
+os_executor = Factory.tools.get_os_executor()
+sub_executor = Factory.tools.get_sub_executor()
+executor = Factory.tools.get_executor()
+
+command = Factory.tools.command_pack.create_command('pip list')
+pack = Factory.tools.command_pack.create_pack('default')
+
+cfg_parser = Factory.tools.parsers.get_cfg_parser()
+json_parser = Factory.tools.parsers.get_json_parser()
+parser = Factory.tools.parsers.get_parser()
+
+pack_maker = Factory.tools.makers.get_pack_maker()
+
+```
 
 ### Termux support:
 
