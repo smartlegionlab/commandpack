@@ -45,7 +45,7 @@ Author and developer: ___A.A Suvorov___
 
 ## What's new?
 
-___commandpack v0.3.0___
+___commandpack v0.3.1___
 
 ***
 

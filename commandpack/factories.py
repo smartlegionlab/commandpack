@@ -1,8 +1,10 @@
 # --------------------------------------------------------
 # Licensed under the terms of the BSD 3-Clause License
 # (see LICENSE for details).
-# Copyright © 2018-2024, A.A Suvorov
+# Copyright © 2018-2024, A.A. Suvorov
 # All rights reserved.
+# --------------------------------------------------------
+# https://github.com/smartlegionlab/
 # --------------------------------------------------------
 from commandpack.executors import OsExecutor, Executor, SubExecutor
 from commandpack.tools import PackMaker, CfgParser, JsonParser, Parser, Command, Pack
