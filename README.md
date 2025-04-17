@@ -6,6 +6,7 @@ I recommend using my new library [commandex](https://github.com/smartlegionlab/c
 
 ***
 
+[![PyPI Downloads](https://static.pepy.tech/badge/commandpack)](https://pepy.tech/projects/commandpack)
 ![GitHub top language](https://img.shields.io/github/languages/top/smartlegionlab/commandpack)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/commandpack?label=pypi%20downloads)](https://pypi.org/project/commandpack/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/smartlegionlab/commandpack)](https://github.com/smartlegionlab/commandpack/)
